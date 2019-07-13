@@ -36,9 +36,9 @@ def login():
 				login_session["id"] = user.id
 				login_session["group"] = user.group
 				return dashboard()
-		else:
-			flash("invalid username")
-			return render_template("login.html")
+			else:
+				flash("invalid username")
+				return render_template("login.html")
 		team = get_team_name(request.form['team name'])
 		if team==None:
 			flash("invalid login")
