@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block body %}
+<!-- About Section -->
+  <section class="page-section bg-primary text-white mb-0" id="about">
+    <div class="container">
+
+      <!-- About Section Heading -->
+      <h2 class="page-section-heading text-center text-uppercase text-white">{{question.name}}</h2>
+
+      <!-- Icon Divider -->
+      <div class="divider-custom divider-light">
+        <div class="divider-custom-line"></div>
+        <div class="divider-custom-icon">
+          <i class="fas fa-star"></i>
+        </div>
+        <div class="divider-custom-line"></div>
+      </div>
+
+      <!-- About Section Content -->
+      <div class="row">
+        <p>{{question.question}}</p>
+      </div>
+
+
+
+		<form action="/answerQuestion/{{question.id}}" method = 'post'>
+			<input type="text" name="answer" placeholder="Answer">
+			<input type="text" name="code" placeholder="Code">
+			<button  class="btn btn-xl btn-outline-light" type="submit" id="submit-login"> Submit </button>
+		</form>      
+
+
+    </div>
+  </section>
+{% endblock %}

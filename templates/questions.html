@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% block body %}
+<!-- Portfolio Section -->
+  <section class="page-section portfolio" id="portfolio">
+    <div class="container">
+
+      <!-- Portfolio Section Heading -->
+      <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Questions</h2>
+
+      <!-- Icon Divider -->
+      <div class="divider-custom">
+        <div class="divider-custom-line"></div>
+        <div class="divider-custom-icon">
+          <i class="fas fa-star"></i>
+        </div>
+        <div class="divider-custom-line"></div>
+      </div>
+
+      <!-- Portfolio Grid Items -->
+      <div class="row">
+
+      	{% for question in questions %}
+        <!-- Portfolio Item 1 -->
+        
+        <div class="col-md-12 col-lg-6">
+        	<a href = "/viewQuestion/{{question.id}}">
+        	{%if question.id in team.questions_status and team.questions_status[question.id]["correct"] %}
+	          <div class="portfolio-item mx-auto" style="padding: 10px; font-size: 20px; border: 3px solid rgba(33, 37, 41, 0.5);">
+	            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100" >
+	              <div class="portfolio-item-caption-content text-center text-white">
+	                <i class="fas fa-plus fa-3x"></i>
+	              </div>
+	            </div>
+	            
+            	<strong style="color: #117964">{{question.name}} ✔️</strong>
+            </div>
+            {%else%}
+            <div class="portfolio-item mx-auto" style="padding: 10px; font-size: 20px; border: 3px solid rgba(33, 37, 41, 0.5);">
+	            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+	              <div class="portfolio-item-caption-content text-center text-white">
+	                <i class="fas fa-plus fa-3x"></i>
+	              </div>
+	            </div>
+            	<strong style="color: #2c3e50">{{question.name}}</strong>
+            </div>
+            {%endif%}
+          </a>
+        </div>
+        
+        {% endfor %}
+
+      </div>
+      <!-- /.row -->
+
+    </div>
+  </section>
+{% endblock %}
