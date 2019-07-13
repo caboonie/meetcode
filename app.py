@@ -88,7 +88,7 @@ def viewQuestions():
 	checkLoggedIn()
 	print(login_session)
 	team = get_team_name(login_session["team"])
-	if login_session["group"]==admin:
+	if login_session["group"]=="admin":
 		team = None
 	return render_template("questions.html", questions = get_questions(), team = team)
 
@@ -96,7 +96,7 @@ def viewQuestions():
 def viewQuestion(id):
 	checkLoggedIn()
 	team = get_team_name(login_session["team"])
-	if login_session["group"]==admin:
+	if login_session["group"]=="admin":
 		team = None
 	return render_template("question.html", question = get_question_id(id), team = team)
 
