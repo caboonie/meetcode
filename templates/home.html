@@ -1,11 +1,21 @@
 {% extends "layout.html" %}
+<style type="text/css">
+  table{
+    border-collapse:collapse;
+    border:1px solid #FF0000;
+    }
+
+    table td{
+    border:1px solid #FF0000;
+    }
+</style>
 {% block body %}
 <!-- Masthead -->
-  <header class="masthead bg-primary text-white text-center">
+  <header class="masthead bg-primary text-white text-center" style="padding-top: calc(4rem + 30px);">
     <div class="container d-flex align-items-center flex-column">
 
       <!-- Masthead Avatar Image -->
-      <img class="masthead-avatar mb-5" src="img/avataaars.svg" alt="">
+      <img class="masthead-avatar mb-5" src="{{ url_for('static',filename='img/coding.png')}}" alt="">
 
       <!-- Masthead Heading -->
       <h1 class="masthead-heading text-uppercase mb-0">MEETCODE</h1>
@@ -19,9 +29,22 @@
         <div class="divider-custom-line"></div>
       </div>
 
-      <!-- Masthead Subheading -->
-      <p class="masthead-subheading font-weight-light mb-0">The MEETCode Contest has not started yet!</p>
-
+      {%if start%}
+        <table >
+          <tr>
+            <th colspan="2">Leaderboard</th>
+          </tr>
+          {%for team in teams%}
+          <tr>
+              <td>{{team.name}}</td>
+              <td>{{team.points}}</td>
+          </tr>
+          {%endfor%}
+        </table>
+      {%else%}
+          <!-- Masthead Subheading -->
+          <p class="masthead-subheading font-weight-light mb-0">The MEETCode Contest has not started yet!</p>
+      {%endif%}
     </div>
   </header>
 {% endblock %}

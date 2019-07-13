@@ -20,14 +20,24 @@
       <div class="row">
         <p>{{question.question}}</p>
       </div>
+      <div class="row">
+        <p>This question is worth {{question.points}} points</p>
+      </div>
 
 
 
-		<form action="/answerQuestion/{{question.id}}" method = 'post'>
-			<input type="text" name="answer" placeholder="Answer">
-			<input type="text" name="code" placeholder="Code">
-			<button  class="btn btn-xl btn-outline-light" type="submit" id="submit-login"> Submit </button>
-		</form>      
+
+    {%if question.id in team.questions_status and team.questions_status[question.id]["correct"] %}
+    <div class="row">
+		  <h2>You have already answered this question correctly</h2>
+    </div>
+    {%else%}
+    <form action="/answerQuestion/{{question.id}}" method = 'post'>
+      <input type="text" name="answer" placeholder="Answer">
+      <input type="text" name="code" placeholder="Code">
+      <button  class="btn btn-xl btn-outline-light" type="submit" id="submit-login"> Submit </button>
+    </form>   
+    {%endif%}
 
 
     </div>

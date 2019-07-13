@@ -23,6 +23,9 @@ def create_team(team_name,password):
 def get_team_name(team_name):
     return session.query(Team).filter_by(name=team_name).first();
 
+def get_teams():
+    return session.query(Team).all();
+
 
 #assume they have been verified with the team password
 def create_user(user_name,team_name,group="student"):
@@ -61,6 +64,12 @@ def update_question(team_id,question_id,status):
 
 #create_team("test","test")
 #create_user("caleb","test")
-#create_question("Lost in the Crypts","rw fqjc hnja fjb rjbj nbcjkurbqnm?","1990","mmm Caesar salad, my favorite Shift",5)
+#create_question("Lost in the Crypts","rw fqjc hnja fjb rjbj nbcjkurbqnm?","1990","mmm Caesar salad, my favorite Shift",2)
 #create_question("Prime Time","If you take the time (hour and minute) on a digital clock to make a number, such as 3:14 -> 314, in a single day, how many primes would appear? Note, for times such as half-past noon, the clock shows 12:30, which would be 1230 as a number.","232","Every number happens twice in 24 hours.",10)
+#create_question("Yaaaaaaas","How many times does the letter a appear in this: Y"+3*"aaaaaaaaaaaAAAAAAAAAAAAaaaAAaaAAAldkjfsAAAAAAAAAAAAaaaaaooooaaaaAAAAAAAAAAAAAAAAAAAaaaaaa",100,2)
+#create_question("Fiba-what now?","MEET students have invented a new fibonacci sequence where you take the sum of the last three numbers in the sequence to get the next, and they call it the Fibano-she-didn't sequence. What are the last three digits of the 2019th Fibano-she-didn't number?",100,5)
+#create_question("Ohmygodtherearesomanystairs","How many stairs are there?",213,50)
+#logic puzzle mystery with IASA food
+#
+
 #print("team: ",[user.name for user in get_team_name("test").users])

@@ -19,7 +19,7 @@ def home():
 	team = None
 	if 'id' in login_session:
 		team = get_team_name(login_session["team"])
-	return render_template('home.html', team = team)
+	return render_template('home.html', team = team, start=True, teams = sorted(get_teams(),key=lambda x:x.points))
 
     
 
