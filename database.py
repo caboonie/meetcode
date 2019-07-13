@@ -20,6 +20,11 @@ def create_team(team_name,password):
         session.add(newTeam)
         session.commit()
 
+def remove_team(team_name):
+    team = session.query(Team).filter_by(name=team_name).first();
+    session.delete(team)
+    session.commit()
+
 def get_team_name(team_name):
     return session.query(Team).filter_by(name=team_name).first();
 
@@ -33,11 +38,19 @@ def create_user(user_name,team_name,group="student"):
     session.add(user)
     session.commit()
 
+def create_admin():
+    user = User(name = "admin",team_id="admins",group="admin")
+    session.add(user)
+    session.commit()
+
 def get_user_team_name(team_name,user_name):
     for user in session.query(Team).filter_by(name=team_name).first().users:
         if user.name==user_name:
             return user
     return None
+
+def get_admin_user():
+    return session.query(User).filter_by(name="admin").first()
 
 def create_question(name,question,answer,hint,points):
     question = Question(name = name,question=question,answer=answer,hint=hint,points=points)
@@ -62,8 +75,9 @@ def update_question(team_id,question_id,status):
     session.commit()
 
 
+#create_admin()
 #create_team("test","test")
-#create_user("caleb","test")
+#create_user("admin","doesn't matter")
 #create_question("Lost in the Crypts","rw fqjc hnja fjb rjbj nbcjkurbqnm?","1990","mmm Caesar salad, my favorite Shift",2)
 #create_question("Prime Time","If you take the time (hour and minute) on a digital clock to make a number, such as 3:14 -> 314, in a single day, how many primes would appear? Note, for times such as half-past noon, the clock shows 12:30, which would be 1230 as a number.","232","Every number happens twice in 24 hours.",10)
 #create_question("Yaaaaaaas","How many times does the letter a appear in this: Y"+3*"aaaaaaaaaaaAAAAAAAAAAAAaaaAAaaAAAldkjfsAAAAAAAAAAAAaaaaaooooaaaaAAAAAAAAAAAAAAAAAAAaaaaaa",100,2)

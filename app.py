@@ -17,9 +17,9 @@ app.config['SECRET_KEY'] = 'you-will-never-guess'
 @app.route('/')
 def home():
 	team = None
-	if 'id' in login_session:
+	if 'id' in login_session and login_session["group"]=="student":
 		team = get_team_name(login_session["team"])
-	return render_template('home.html', team = team, start=True, teams = sorted(get_teams(),key=lambda x:x.points))
+	return render_template('home.html', team = team, start=True, teams = sorted(get_teams(),key=lambda x:-x.points))
 
     
 
@@ -30,6 +30,15 @@ def login():
 	if request.method == 'GET':
 		return render_template('login.html')
 	else:
+		if(request.form["user name"]=="admin"):
+			if request.form['password']=="adminmeet":
+				user = get_admin_user()
+				login_session["id"] = user.id
+				login_session["group"] = user.group
+				return dashboard()
+		else:
+			flash("invalid username")
+			return render_template("login.html")
 		team = get_team_name(request.form['team name'])
 		if team==None:
 			flash("invalid login")
@@ -43,6 +52,7 @@ def login():
 
 			login_session["id"] = user.id
 			login_session["team"] = team.name
+			login_session["group"] = user.group
 			flash("Welcome "+user.name)
 			return home()
 		else:
@@ -99,7 +109,7 @@ def answerQuestion(id):
 			flash("Incorrect.")
 	else:
 		flash("You've already answered this question correctly.")
-	return viewQuestion(id)
+	return redirect(request.referrer)
 
 @app.route("/teamInfo")
 def teamInfo():
@@ -109,7 +119,36 @@ def teamInfo():
 @app.route("/dashboard")
 def dashboard():
 	checkAdmin()
-	return home()
+	return render_template("dashboard.html", teams = get_teams(), questions = get_questions())
+
+@app.route("/makeTeam",methods=['POST'])
+def makeTeam():
+	checkAdmin()
+	if(get_team_name(request.form['team name'])==None):
+			create_team(request.form['team name'],request.form['password'])
+	return redirect(request.referrer)
+
+@app.route("/removeTeam",methods=['POST'])
+def removeTeam():
+	checkAdmin()
+	if(get_team_name(request.form['team name'])!=None):
+			remove_team(request.form['team name'])
+	return redirect(request.referrer)
+
+@app.route("/makeQuestion",methods=['POST'])
+def makeQuestion():
+	checkAdmin()
+	return redirect(request.referrer)
+
+@app.route("/editQuestion",methods=['POST'])
+def editQuestion():
+	checkAdmin()
+	return redirect(request.referrer)
+
+@app.route("/removeQuestion",methods=['POST'])
+def removeQuestion():
+	checkAdmin()
+	return redirect(request.referrer)
 
 if __name__ == '__main__':
 	app.run(debug=True,host= '0.0.0.0')
