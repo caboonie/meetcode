@@ -87,12 +87,18 @@ def checkAdmin():
 def viewQuestions():
 	checkLoggedIn()
 	print(login_session)
-	return render_template("questions.html", questions = get_questions(), team = get_team_name(login_session["team"]))
+	team = get_team_name(login_session["team"])
+	if login_session["group"]==admin:
+		team = None
+	return render_template("questions.html", questions = get_questions(), team = team)
 
 @app.route("/viewQuestion/<int:id>")
 def viewQuestion(id):
 	checkLoggedIn()
-	return render_template("question.html", question = get_question_id(id), team = get_team_name(login_session["team"]))
+	team = get_team_name(login_session["team"])
+	if login_session["group"]==admin:
+		team = None
+	return render_template("question.html", question = get_question_id(id), team = team)
 
 @app.route("/answerQuestion/<int:id>",methods=['POST'])
 def answerQuestion(id):
